@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="container" id="quacks-vue">
+        <div class="columns">
+            <div class="column is-12">
+                <div class="wrapper-form">
+                    <form v-on:submit.prevent="submitQuack">
+                        <div class="field">
+                            <div class="control">
+                                <textarea name="" id="" cols="15" rows="5" class="textarea" v-model="body" placeholder="What are you quacking about?"></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="wrapper-quacks">
+                    <div v-for="quack in quacks" class="block">
+                        <div class="box">
+                            <h3>[[ quack.quacker ]] quacked:</h3>
+                            <p>"[[ quack.body ]]"</p>
+                            <p>[[ quack.created_at ]]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+<!-- Vue app -->
+let app = new Vue({
+    el: '#quacks-vue',
+    delimiters: ['[[', ']]'],
+    data: function() {
+        return {
+            quacks: [],
+            body: '',
+            quacker: '{{ request.user.username }}',
+            created_at:'Now'
+        }
+    },
+    methods: {
+        submitQuack(){
+            console.log('submitQuack');
+            if (this.body.length > 0){
+                let quack = {
+                    'body': this.body,
+                    'quacker': this.quacker,
+                    'created_at': this.created_at
+                };
+                this.quacks.unshift(quack); // put newest quack on top
+
+                // Send data to db
+            }
+            this.body = '';
+        }
+
+    }
+});
+</script>
+{% endblock content %}
