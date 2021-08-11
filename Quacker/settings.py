@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import api.apps
 import core.apps
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'quacks.apps.QuacksConfig',
     'core.apps.CoreConfig',
-    'user_profile.apps.UserProfileConfig'
+    'user_profile.apps.UserProfileConfig',
+    'api.apps.ApiConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
