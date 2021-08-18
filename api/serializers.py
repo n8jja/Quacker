@@ -7,4 +7,4 @@ from quacks.models import Quack
 class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quack
-        fields = ['body', 'author', 'date_created']
+        fields = '__all__'
